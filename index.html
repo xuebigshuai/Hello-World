@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>圣杯布局和双飞翼布局</title>
+</head>
+<style>
+    .containers{
+        padding: 0 300px 0 200px;
+        zoom: 1;
+    }
+    .containers:after{
+        content: '';
+        display: block;
+        clear: both;
+        height: 0;
+    }
+    .main,.left,.right{
+        float: left;
+        min-height: 130px;
+        /*position: relative;*/
+    }
+    .main{
+        background-color: blue;
+        width: 100%;
+    }
+    .left{
+        width: 200px;
+        background-color: green;
+        margin-left: -100%;
+        /*left: -200px;*/
+    }
+    .right{
+        width: 300px;
+        background-color: red;
+        margin-left: -300px;
+        /*right: -300px;*/
+    }
+    .main2,.left2,.right2 {
+        min-height: 200px;
+        float: left;
+    }
+    .main2{
+        background-color: blue;
+        width: 100%;
+    }
+    .left2{
+        width: 200px;
+        background-color: green;
+        margin-left: -100%;
+    }
+    .right2{
+        width: 300px;
+        background-color: red;
+        margin-left: -300px;
+    }
+    .content{
+        margin: 0 300px 0 200px;
+    }
+
+</style>
+<body>
+<h1>圣杯布局</h1>
+<div class="containers">
+    <div class="main"> main main main main</div>
+    <div class="left">left</div>
+    <div class="right">right</div>
+</div>
+<hr style="filter: alpha(opacity=100,finishopacity=0,style=1)";color=#987cb9 ;size=3/>
+<h1>双飞翼布局</h1>
+<section>
+    <article>
+       <div class="container">
+           <div class="main2">
+               <div class="content">
+                   main
+               </div>
+           </div>
+           <div class="left2">left2</div>
+           <div class="right2">right2</div>
+       </div>
+    </article>
+</section>
+</body>
+</html>
