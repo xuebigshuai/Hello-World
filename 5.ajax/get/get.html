@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GET</title>
+</head>
+<body>
+<div id="content"></div>
+</body>
+<script>
+    var oDiv = document.getElementById("content");
+    /*创建ajax对象*/
+    var xhr  = new XMLHttpRequest();
+    /*初始化*/
+    xhr.open("post",'user.json',true);
+    /*注册状态监听器*/
+    xhr.onreadystatechange = function (ev) {
+        alert(xhr.readyState);
+        console.log(xhr.responseText);
+    };
+    /*发送数据*/
+    xhr.send()
+</script>
+
+</html>

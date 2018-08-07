@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jsonp</title>
+    <script src="https://cdn.bootcss.com/jquery/2.2.3/jquery.js"></script>
+</head>
+<body>
+<label for="taobao">淘宝</label>
+<input type="text" name="search" id="taobao" onkeyup="change(this)">
+<ul id="content"></ul>
+<label for="baidu">百度</label>
+<input type="text" name="search" id="baidu" onkeyup="baidu(this)">
+<ul id="scontent"></ul>
+</body>
+<script>
+
+
+    //淘宝的jsonp接口
+    function change(obj){
+        var data={code:'utf-8',q:obj.value,callback:'getData'};
+        $.ajax({
+            url:"http://suggest.taobao.com/sug",
+            data:data,
+            method:'GET',
+            dataType:'jsonp',
+            jsonp:"callback",
+            timeout:5000//单位毫秒
+        })
+    }
+    //百度搜索jsonp接口
+    function baidu(obj) {
+        var data={wd:obj.value};
+        $.ajax({
+            url:"https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su",
+            data:data,
+            method:'GET',
+            dataType:'jsonp',
+            jsonp:"cd",
+            timeout:5000,//单位毫秒
+            success:function (data2) { alert(data2) },
+            error:function (jqXHR) {  }
+        })
+
+    }
+    function getData(data) {
+        var res = data.result;
+        $("#content").children().remove();
+        res.forEach(function (item) {
+               var li = '<li>'+ item[0]+'</li>';
+               $("#content").append(li);
+        });
+        console.log(data);
+    }
+    window.baidu.sug =  function  (data) {
+        var res = data.s;
+        $("#scontent").children().remove();
+        res.forEach(function (item) {
+            var li = '<li>'+ item+'</li>';
+            $("#scontent").append(li);
+        });
+    }
+</script>
+</html>
