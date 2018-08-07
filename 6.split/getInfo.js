@@ -16,6 +16,7 @@ http.createServer(function (req,res) {
               console.log(data);
               data = data.toString();
              let reg =/<a .+ <\/a>/g;
+             //将A标签过滤出来
              let matches = data.match(reg);
              let innerHtml ='';
              matches.forEach(function (item) {
