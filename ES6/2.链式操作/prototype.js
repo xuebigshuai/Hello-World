@@ -9,4 +9,4 @@ p.hasI = function (arguments) {
     console.log(arguments);
 };
 var t = p.hasOwnProperty('name');
-console.log(p.name,t,typeof  p.hasI);
+console.log(p.name,t,typeof  p.hasI,'name' in p);
