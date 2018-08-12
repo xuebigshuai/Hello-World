@@ -41,7 +41,7 @@ var Book2 = (function () {
         display:function () {
 
         }
-     }
+     };
      return _book;
 })();
 
