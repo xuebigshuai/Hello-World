@@ -21,7 +21,8 @@ http.createServer(function (req,res) {
              let innerHtml ='';
              matches.forEach(function (item) {
                  innerHtml += '<li>'+item+'</li>';
-             })
+             });
+             //replace 返回一个新的字符串，是用 replacement 替换了 regexp 的第一次匹配或所有匹配之后得到的。
             html = html.replace('<div></div>',innerHtml);
              console.log(html);
              res.end(html);
