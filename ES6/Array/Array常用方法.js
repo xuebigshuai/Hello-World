@@ -40,8 +40,6 @@ var arr4 =arr1.map(function (item,index) {
     }else {
         return item-1;
     }
-
-
 },arr2);
 var arr5 = arr1.map(parseInt);
 var gg = parseInt("12.3");
