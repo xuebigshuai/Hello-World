@@ -1,3 +1,8 @@
+/**
+ * 处理post请求
+ * @type {*|createApplication}
+ */
+
 var express = require('express');
 var app =express();
 /*解析post请求体中的参数*/
