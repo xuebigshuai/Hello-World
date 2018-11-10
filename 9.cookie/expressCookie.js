@@ -1,15 +1,14 @@
-//let http = require('http');
 let cookieParser = require('cookie-parser');
 let express = require('express');
-//let url = require('url');
-//let queryString = require('querystring');
 var app = express();
 /**
  * express框架设置cookie
  */
 app.use(cookieParser());
 /**
- * 当使用了cookieParser中间件后，会多两个和一个属性
+ * 当使用了cookieParser中间件后，会多两个方法和一个属性
+ * cookies属性
+ * cookie()方法
  */
 app.get('/',function (req,res) {
     var isVisited= req.cookies.isVisited;
@@ -20,4 +19,4 @@ app.get('/',function (req,res) {
         res.send("欢迎新朋友")
     }
 });
-app.listen(8080);
+app.listen(8086);
