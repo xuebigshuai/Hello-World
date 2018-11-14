@@ -22,6 +22,13 @@ db.then(() => {
 }).catch(() => {
     console.log("连接失败")
 });
+function callback(error,doc) {
+    if(error){
+        console.error(error)
+    }else {
+        console.log(doc);
+    }
+}
 /*
 * 数据库的集合结构定义，定义字段和类型
 * */
@@ -35,25 +42,6 @@ var PersonSchema = new mongoose.Schema({
 * 第一个参数为集合的名字,mongoDB会将集合的名字转成复数（如 person->people）
 * */
 var PersonModel = mongoose.model("person", PersonSchema);
-/*
-*
-* 创建实体 Entity 只有一个save方法，但是它也可以操作数据库
-* */
-var personEntity = new PersonModel({
-    name: 'helloWorld',
-    age: 1,
-    email: "helloworld@163.com"
-});
-/*
-* 将创建的实体保存到数据库中
-* */
-personEntity.save(function (error, doc) {
-    if (error) {
-        console.log(error);
-    } else {
-        console.log(doc)
-    }
-});
 /**
  *
  * 查找方法
@@ -66,15 +54,18 @@ PersonModel.find({age: 1}, function (error, doc) {
     }
 });
 /*
-* 更新方法，这些都是异步的 increment
+* 更新方法，这些都是异步的 increment、
+* 一次更新一个
+* 一次更新全部，需要加 multi 为true的条件
 * */
-PersonModel.update({name: 'helloWorld'},{$inc:{age:2}},function (error,doc) {
-    if(error){
-        console.error(error)
-    }else {
-        console.log(doc);
-    }
-});
+PersonModel.update({name: 'helloWorld'},{$inc:{age:2}},{
+    multi:true
+},callback);
+/*
+* 删除某个数据
+* */
+PersonModel.remove({age:5},callback);
+
 
 
 

@@ -35,48 +35,29 @@ var PersonSchema = new mongoose.Schema({
 * 第一个参数为集合的名字,mongoDB会将集合的名字转成复数（如 person->people）
 * */
 var PersonModel = mongoose.model("person", PersonSchema);
-/*
-*
-* 创建实体 Entity 只有一个save方法，但是它也可以操作数据库
-* */
-var personEntity = new PersonModel({
-    name: 'helloWorld',
-    age: 1,
-    email: "helloworld@163.com"
-});
-/*
-* 将创建的实体保存到数据库中
-* */
-personEntity.save(function (error, doc) {
-    if (error) {
-        console.log(error);
-    } else {
-        console.log(doc)
-    }
-});
-/**
- *
- * 查找方法
- */
-PersonModel.find({age: 1}, function (error, doc) {
-    if (error) {
-        console.error(error)
-    } else {
-        console.log(doc.length)
-    }
-});
-/*
-* 更新方法，这些都是异步的 increment
-* */
-PersonModel.update({name: 'helloWorld'},{$inc:{age:2}},function (error,doc) {
+function callback(error,doc) {
     if(error){
         console.error(error)
     }else {
         console.log(doc);
     }
-});
+}
+/*PersonModel.remove({},callback);
+
+PersonModel.create([{name:'zfx',age:'1'}
+,{name:'zfw',age:'2'}
+,{name:'wfw',age:'3'}
+,{name:'sgfw',age:'4'}
+,{name:'sfgw',age:'5'}
+,{name:'sfgw',age:'6'}
 
 
+],callback);*/
+/**
+ * find 返回游标
+ * exce() 真正执行查询
+ */
+PersonModel.find({},{age:1}).sort({age:-1}).skip(2).limit(3).exec(callback);
 
 
 
