@@ -12,7 +12,7 @@ let fs = require('fs');
 let path =require('path');
 app.use(bodyParser.urlencoded({extended:true}));
 app.post("/user",function (req,res) {
-   var newUser = req.body;
+   var newUser = req.body;//获取到的是json格式数据
    var users = require(db);
    newUser.id = users[users.length-1].id*1 + 1;
    users.push(newUser);
