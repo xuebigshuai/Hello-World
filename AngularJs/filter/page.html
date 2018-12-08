@@ -107,12 +107,12 @@
                 config:'=?',
             },
             link:function (scope,element,attrs) {
-                scope.pageList=scope.config.pageList;
-                scope.current = scope.config.current
-                console.log(scope);
-                scope.selectPage=function (num) {
-                    scope.current=num || scope.config.current;
-                }
+               scope.pageList=scope.config.pageList;
+                /*scope.current = scope.config.current
+               console.log(scope);
+               scope.selectPage=function (num) {
+                   scope.current=num || scope.config.current;
+               }*/
             }
         }
     }])
