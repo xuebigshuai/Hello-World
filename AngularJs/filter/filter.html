@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>filter</title>
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <script src="../bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../bower_components/angular/angular.min.js" type="text/javascript"></script>
+</head>
+<body ng-controller="myController" class="container">
+<div class="panel panel-default">
+    <div class="panel-header alert  alert-info">购物车</div>
+     <label>排序<input type="checkbox" ng-model="isReverse"/></label>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>物品名</th>
+            <th>单价</th>
+            <th>数量</th>
+            <th>总价</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--
+           orderBy:expression:reverse
+           expression:排序的字段，如‘price’ 按价格正序排，‘-price’ 按价格倒叙排
+           reverse:是否反序为boolean值
+           -->
+        <tr ng-repeat="item in items | orderBy:'-price':isReverse">
+            <td>{{item.name}}</td>
+            <td>{{item.price}}</td>
+            <td>{{item.number}}</td>
+            <td>{{item.number*item.price}}</td>
+            <td>
+                <button type="button" class="btn btn-success btn-lg" ng-click="add(item)" style="margin-right: 10px">+</button>
+                <button class="btn btn-lg btn-danger" ng-click="remove(item)">-</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5">总额：{{itemSum()}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="panel panel-default">
+    <div class="panel-header alert  alert-info">过滤器的使用</div>
+    <div class="panel-body">
+        {{222 | currency:'￥'}}<br>
+        {{1288323623006| date:'yyyy-MM-dd HH:mm:ss Z' }}<br>
+        {{[1,2,3,4,5,6] | limitTo:3}}<br>
+        {{3.222 | number:2}}
+    </div>
+</div>
+</body>
+<script>
+    var app = angular.module('app', []);
+    app.controller('myController', function ($scope) {
+        $scope.people = [
+            {"name": "薛煜帅", age: 2},
+            {"name": "唱歌", age: 32}
+        ];
+        $scope.items = [
+            {name: "iphone7", price: 6888, number: 0},
+            {name: "iphone8", price: 9999, number: 0},
+            {name: "iphoneX", price: 10266, number: 0},
+            {name: "iphoneXR", price: 6499, number: 0},
+        ];
+        $scope.itemSum = function () {
+            return $scope.items.reduce(function (current, next) {
+                return current + next.price * next.number
+            }, 0)
+        };
+        $scope.add = function (obj) {
+            obj.number++;
+        };
+        $scope.remove = function (obj) {
+            obj.number--;
+            if (obj.number < 0) {
+                $scope.items = $scope.items.filter(function (item) {
+                    return item != obj
+                })
+            }
+        }
+    })
+</script>
+</html>

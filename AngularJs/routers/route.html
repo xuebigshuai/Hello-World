@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>路由</title>
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <script src="../bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../bower_components/angular/angular.min.js" type="text/javascript"></script>
+    <script src="../bower_components/angular-route/angular-route.js" type="text/javascript"></script>
+</head>
+<body class="container" ng-app="app" ng-controller="myController">
+<ul class="nav nav-tabs">
+    <li role="presentation" ng-class={"active":menue=='home'}><a ng-click="menue='home'" href="#!/home">首页</a></li>
+    <li role="presentation" ng-class={"active":menue=='list'}><a ng-click="menue='list'" href="#!/list">列表</a></li>
+    <li role="presentation" ng-class={"active":menue=='detail'}><a ng-click="menue='detail'" href="#!/detail">详情</a></li>
+</ul>
+<!-- ng-view显示路由页面-->
+<div ng-view></div>
+</body>
+<script>
+    var app = angular.module('app', ["ngRoute"]);
+    app.config(function ($routeProvider, $locationProvider) {
+        $routeProvider
+            .when('/home', {
+                templateUrl: 'template.html',
+                controller: function ($scope) {
+                    $scope.title = '首页'
+                }
+            })
+            .when('/list', {
+                templateUrl: 'template.html',
+                controller: function ($scope) {
+                    $scope.title = '列表'
+                }
+            })
+            .when('/detail', {
+                templateUrl: 'template.html',
+                controller: function ($scope) {
+                    $scope.title = '详情'
+                }
+            })
+            .otherwise({
+                redirectTo:'/home'
+            })
+
+
+
+    });
+    app.controller('myController', function ($scope) {
+            $scope.menue='home';
+    })
+</script>
+</html>

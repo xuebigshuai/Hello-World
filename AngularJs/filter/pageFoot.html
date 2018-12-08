@@ -1,0 +1,20 @@
+<nav ng-if="pageList.length>0" aria-label="Page navigation" class="navbar-right">
+    <ul class="pagination">
+        <li ng-class="{'disabled':current<=1}">
+            <span ng-if="current<=1" aria-hidden="true">&laquo;</span>
+            <a ng-if="current>1" href="javascript:void(0)" ng-click="selectPage(current-1)" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li ng-repeat="num in pageList" ng-class="{'active':num==current}"><a ng-click="selectPage(num)" href="#">{{num}}</a>
+        </li>
+        <li ng-class="{'disabled':current>=pageList.length}">
+            <span ng-if="current>=pageList.length" aria-hidden="true">&raquo;</span>
+            <a ng-if="current<pageList.length" href="javascript:void(0)" aria-label="Next"
+               ng-click="selectPage(current+1)">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+{{nn}}
