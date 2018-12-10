@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>filter</title>
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <script src="../bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../bower_components/angular/angular.min.js" type="text/javascript"></script>
+</head>
+<body ng-controller="myController" class="container">
+<select name="" id="site" ng-model="myData" ng-options="data.label for data in datas1" ng-change="change1()"></select>
+<select name="" id="jizhan" ng-model="myData1" ng-options="data.label for data in datas2" ng-change="change2()">
+    <option value="">请选择</option>
+</select>
+<select name="" id="jicao" ng-model="myData2" ng-options="data.label for data in datas3" ng-change="change3()">
+    <option value="">请选择</option>
+</select>
+<select name="" id="host" ng-model="myData3" ng-options="data.label for data in datas4">
+    <option value="">请选择</option>
+</select>
+
+</body>
+<script>
+    var app = angular.module('app', []);
+    app.controller('myController', function ($scope) {
+        $scope.datas = [
+            {value: 1,label: "机站"},
+            {value: 2,label: "机框"},
+            {value: 3,label: "机槽"},
+            {value: 4,label: "host"}
+        ];
+        $scope.datas1 = $scope.datas;
+        $scope.datas2 = $scope.datas.slice(1);
+        $scope.datas3 = $scope.datas.slice(2);
+        $scope.datas4 = $scope.datas.slice(3);
+        $scope.myData=$scope.datas[0];
+        $scope.myData1=$scope.datas[1];
+        $scope.myData2=$scope.datas[2];
+        $scope.myData3=$scope.datas[3];
+
+        $scope.change1 = function () {
+            $scope.datas2 = $scope.datas.filter(function (item) {
+                return item.label != $scope.myData.label;
+            });
+            console.log($scope.datas2);
+            $scope.datas3 = $scope.datas.filter(function (item) {
+                return item.label != $scope.myData.label;
+            });
+            $scope.datas4 = $scope.datas.filter(function (item) {
+                return item.label != $scope.myData.label;
+            });
+        };
+        $scope.change2 = function () {
+            if(!$scope.myData1) {
+                return;
+            }
+            $scope.datas3 = $scope.datas.filter(function (item) {
+                return (item.label != $scope.myData1.label && item.label != $scope.myData.label);
+            });
+            $scope.datas4 = $scope.datas.filter(function (item) {
+                return (item.label != $scope.myData1.label && item.label != $scope.myData.label);
+            });
+        };
+        $scope.change3 = function () {
+            if(!$scope.myData2) {
+               return;
+            }
+            $scope.datas4 = $scope.datas.filter(function (item) {
+                return (item.label != $scope.myData1.label && item.label != $scope.myData2.label && item.label != $scope.myData.label);
+            });
+        };
+    })
+</script>
+</html>
