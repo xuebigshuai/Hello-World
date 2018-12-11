@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>socketIO</title>
+    <style>
+        div {
+            border: 1px solid #b2dba1;
+        }
+    </style>
+</head>
+<body>
+<p id="connect"></p>
+<div id="messageD"></div>
+<div id="messageG"></div>
+<div id="messageR"></div>
+<p>
+    <label><input type="radio" value="green" name="home">绿房间</label>
+</p>
+<p>
+    <label><input type="radio" value="red" name="home">红房间</label>
+</p>
+<p>
+    <label><input type="button" onclick="hua()" value="华山派"></label>
+</p>
+<p>
+    <label><input type="button"  onclick="shao()" value="少林派"></label>
+</p>
+<p>
+    <input type="text" id="messages"/>
+    <button type="button" onclick="sendM()">发送</button>
+</p>
+</body>
+<!--引入socketIO，这是固定写法-->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    window.onload = function () {
+        var p = document.getElementById('connect');
+        //客户端连接服务器,相当于三个客户端连接
+        var greenSocket = io.connect('/green');
+        var redSocket = io.connect('/red');
+        var socket = io.connect('/');
+        //监听连接事件,无法使用onconnect();
+        socket.on('connect', function () {
+            p.innerHTML = '连接成功';
+            socket.send('我是 web');
+        });
+        greenSocket.on('connect', function () {
+            p.innerHTML = '连接成功';
+            greenSocket.send('我是green web');
+        });
+        redSocket.on('connect', function () {
+            p.innerHTML = '连接成功';
+            redSocket.send('我是red web');
+        });
+        //无法使用onmessage();
+        socket.on('message', function (msg) {
+            document.getElementById('messageD').innerHTML = msg;
+        });
+        greenSocket.on('message', function (msg) {
+            document.getElementById('messageG').innerHTML = msg;
+        });
+        redSocket.on('message', function (msg) {
+            document.getElementById('messageR').innerHTML = msg;
+        });
+        redSocket.on('disconnect', function () {
+            p.innerHTML = '服务器断开连接';
+        });
+        greenSocket.on('disconnect', function () {
+            p.innerHTML = '服务器断开连接';
+        });
+        window.sendM = function () {
+            var messages = document.getElementById('messages').value;
+            var spaces = document.getElementsByName('home');
+            var space = '';
+            Array.prototype.forEach.call(spaces, function (o) {
+                if (o.checked) {
+                    space = o.value;
+                }
+            });
+            if (space == 'green') {
+                greenSocket.send(messages);
+            } else if (space == 'red') {
+                redSocket.send(messages);
+            } else {
+                socket.send(messages)
+            }
+        }
+
+        window.hua=function () {
+            redSocket.emit('room','hua');
+        };
+        window.shao=function () {
+            redSocket.emit('room','shao');
+
+        };
+
+
+    };
+</script>
+</html>

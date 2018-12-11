@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>socketIO</title>
+    <style>
+        div {
+            border: 1px solid #b2dba1;
+        }
+    </style>
+</head>
+<body>
+<p id="connect"></p>
+<div id="message"></div>
+</body>
+<!--引入socketIO，这是固定写法-->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    window.onload = function () {
+        var p = document.getElementById('connect');
+
+        //客户端连接服务器
+        var socket = io.connect('/');
+        //监听连接事件,无法使用onconnect();
+        socket.on('connect', function () {
+            p.innerHTML = '连接成功';
+            socket.send('我是小web');
+        });
+        //无法使用onmessage();
+        socket.on('message', function (msg) {
+            document.getElementById('message').innerHTML = msg;
+        });
+        socket.on('disconnect', function () {
+            p.innerHTML = '服务器断开连接';
+        });
+
+    }
+</script>
+</html>
