@@ -21,6 +21,7 @@
 
         //客户端连接服务器
         var socket = io.connect('/');
+        //socket =io();简写
         //监听连接事件,无法使用onconnect();
         socket.on('connect', function () {
             p.innerHTML = '连接成功';

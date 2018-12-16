@@ -4,7 +4,7 @@
 */
 //socket.io 内部借助http来实现
 var http = require('http');
-var socket = require('socket.io');
+
 //将socket.io用到express框架中
 var express = require('express');
 var path = require('path');
@@ -22,8 +22,6 @@ app.get('/', function (req, res, next) {
 var server = http.createServer(app);
 //得到一个IO对象
 var io = socket(server)
-//房间
-var room;
 //连接建立
 io.on('connection', function (socket) {
     console.log("在默认的命名空间：客户端连接建立成功");
@@ -46,6 +44,8 @@ io.of('/green').on('connect', function (socket) {
 
 io.of('/red').on('connect', function (socket) {
     console.log("在red的命名空间：客户端连接建立成功");
+    //房间
+    var room;
     socket.on('message', function (msg) {
         console.log(msg)
         console.log(socket.room);
