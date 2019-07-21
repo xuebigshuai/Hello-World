@@ -98,7 +98,7 @@ function deepCopy4(p,c){
         if(p.hasOwnProperty(i)){
             if(typeof p[i] === 'object'){
                 c[i] = Array.isArray(p[i]) ? [] : {};
-                deepCopy(p[i],c[i]);
+                deepCopy4(p[i],c[i]);
             }else{
                 c[i] = p[i];
             }
